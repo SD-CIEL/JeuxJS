@@ -3,22 +3,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <script type="text/javascript" src="js/echo.js"></script>
+    <script type="text/javascript" src="js/qr.js"></script>
     <title>TP JAvascript nodeJS</title>
 </head>
 <body>
     <header>
-        <h1>Apllications web javascript node.JS et webSocket </h1>
+        <h1>Questions / Reponses</h1>
     </header>
     <section>
         <div>
-            <label>Message à envoyer : </label>
+            <label>Votre nom : </label>
+            <input type="text" id="nom" />
+        </div>
+        <div>
+            <label>Question : </label>
+            <input type="text" id="messageRecu" readonly style="width:800px" />
+        </div>        <div>
+            <label>Réponse : </label>
             <input type="text" id="messageEnvoi">
             <input type="button" id="Envoyer" value="Envoyer">
         </div>
-        <div>
-            <label>Message reçu : </label>
-            <input type="text" id="messageRecu" readonly>
+        <div id="resultats">
         </div>
     </section>
     <footer>
