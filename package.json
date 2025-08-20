@@ -9,6 +9,9 @@
   "devDependencies": {
     "eslint": "^8.21.0"
   },
-  "eslintConfig": {
+  "eslintConfig": {},
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-ws": "^5.0.2"
   }
 }
