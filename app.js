@@ -68,8 +68,14 @@ exp.ws('/qr', function (ws, req) {
     function TraiterReponse(message) {
         console.log('De %s %s, message :%s', req.connection.remoteAddress, req.connection.remotePort, message);
         if (message == bonneReponse) {
-            NouvelleQuestion();
+            ws.send("Bonne reponse");
         }
+        else {
+            ws.send("Mauvaise reponse");
+        }
+        setTimeout(() => {  //affichage de la question 3s après
+            NouvelleQuestion();
+        }, 3000);
     }
 
 
