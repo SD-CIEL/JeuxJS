@@ -80,10 +80,23 @@ exp.ws('/qr', function (ws, req) {
 
 
     function NouvelleQuestion() {
-        var x = GetRandomInt(11);
-        var y = GetRandomInt(11);
-        question = x + '*' + y + ' =  ?';
-        bonneReponse = x * y;
+        // var x = GetRandomInt(11);
+        // var y = GetRandomInt(11);
+        // question = x + '*' + y + ' =  ?';
+        // bonneReponse = x * y;
+        // Question de conversion de base 2 vers 10
+        var x = GetRandomInt(256);
+        bonneReponse = x;
+        question = 'Valeur en base 10 du nombre binaire :';
+        for (var i = 7; i >= 0; i--) {
+            if (Math.floor(x / Math.pow(2, i))) {
+                question += '1';
+                x -= Math.pow(2, i);
+            }
+            else {
+                question += '0';
+            }
+        }
         aWss.broadcast(question);
     }
 
