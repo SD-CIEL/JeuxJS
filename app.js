@@ -20,37 +20,45 @@ class CQr {
         return Math.floor(Math.random() * Math.floor(max));
     };
     NouvelleQuestion() {
-            // var x = GetRandomInt(11);
-            // var y = GetRandomInt(11);
-            // question = x + '*' + y + ' =  ?';
-            // bonneReponse = x * y;
+        var x = this.GetRandomInt(11);
+        var y = this.GetRandomInt(11);
+        this.question = x + '*' + y + ' =  ?';
+        this.bonneReponse = x * y;
             // Question de conversion de base 2 vers 10
-            var x = this.GetRandomInt(256);
-            bonneReponse = x;
-            question = 'Valeur en base 10 du nombre binaire :';
-            for (var i = 7; i >= 0; i--) {
-                if (Math.floor(x / Math.pow(2, i))) {
-                    question += '1';
-                    x -= Math.pow(2, i);
-                }
-                else {
-                    question += '0';
-                }
-            }
-            aWss.broadcast(question);
+            //var x = this.GetRandomInt(256);
+            //this.bonneReponse = x;
+            //question = 'Valeur en base 10 du nombre binaire :';
+            //for (var i = 7; i >= 0; i--) {
+            //    if (Math.floor(x / Math.pow(2, i))) {
+            //        question += '1';
+            //        x -= Math.pow(2, i);
+            //    }
+            //    else {
+            //        this.question += '0';
+            //    }
+            //}
+        this.EnvoyerResultatDiff();
     };
     TraiterReponse(wsClient, message) {
         var mess = JSON.parse(message);
-        if (mess.reponse == bonneReponse) {
-            wsClient.send("Bonne reponse de "+mess.nom);
+        if (mess.reponse == this.bonneReponse) {
+            this.question="Bonne reponse de "+mess.nom;
         }
         else {
-            wsClient.send("Mauvaise reponse de " + mess.nom);
+            this.question ="Mauvaise reponse de " + mess.nom;
         }
+        this.EnvoyerResultatDiff();
         setTimeout(() => {  //affichage de la question 3s après
             this.NouvelleQuestion();
         }, 3000);
     }
+    EnvoyerResultatDiff() {
+        var messagePourLesClients = {
+            question: this.question
+        };
+        aWss.broadcast(JSON.stringify(messagePourLesClients));
+    }
+
 };
 
 var jeuxQr = new CQr;

@@ -31,7 +31,8 @@ window.onload = function () {
         };
 
         ws.onmessage = function (evt) {
-            document.getElementById('messageRecu').value = evt.data;
+            var mess = JSON.parse(evt.data);
+            document.getElementById('messageRecu').value = mess.question;
         };
     }
 
