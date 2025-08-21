@@ -39,12 +39,13 @@ class CQr {
             }
             aWss.broadcast(question);
     };
-    TraiterReponse(wsClient,message) {
-        if (message == bonneReponse) {
-            wsClient.send("Bonne reponse");
+    TraiterReponse(wsClient, message) {
+        var mess = JSON.parse(message);
+        if (mess.reponse == bonneReponse) {
+            wsClient.send("Bonne reponse de "+mess.nom);
         }
         else {
-            wsClient.send("Mauvaise reponse");
+            wsClient.send("Mauvaise reponse de " + mess.nom);
         }
         setTimeout(() => {  //affichage de la question 3s après
             this.NouvelleQuestion();
