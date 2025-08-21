@@ -8,6 +8,57 @@
 
 console.log('TP-CIEL');
 
+/*  *********************** Classe Jeux  ***************************   */
+//
+class CQr {
+    constructor() {
+        this.question = '?';
+        this.bonneReponse = false;
+        this.joueurs;
+    };
+    GetRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    };
+    NouvelleQuestion() {
+            // var x = GetRandomInt(11);
+            // var y = GetRandomInt(11);
+            // question = x + '*' + y + ' =  ?';
+            // bonneReponse = x * y;
+            // Question de conversion de base 2 vers 10
+            var x = this.GetRandomInt(256);
+            bonneReponse = x;
+            question = 'Valeur en base 10 du nombre binaire :';
+            for (var i = 7; i >= 0; i--) {
+                if (Math.floor(x / Math.pow(2, i))) {
+                    question += '1';
+                    x -= Math.pow(2, i);
+                }
+                else {
+                    question += '0';
+                }
+            }
+            aWss.broadcast(question);
+    };
+    TraiterReponse(wsClient,message) {
+        if (message == bonneReponse) {
+            wsClient.send("Bonne reponse");
+        }
+        else {
+            wsClient.send("Mauvaise reponse");
+        }
+        setTimeout(() => {  //affichage de la question 3s après
+            this.NouvelleQuestion();
+        }, 3000);
+    }
+};
+
+var jeuxQr = new CQr;
+
+
+
+
+
+
 /*  *********************** Serveur Web ***************************   */
 //
 
@@ -52,57 +103,26 @@ exp.ws('/echo', function (ws, req) {
 var question = '?';
 var bonneReponse = 0;
 
-// Connexion des clients a la WebSocket /qr et evenements associés
-// Questions/reponses
+
+/*  *************** serveur WebSocket express /qr *********************   */
+//
 exp.ws('/qr', function (ws, req) {
     console.log('Connection WebSocket %s sur le port %s', req.connection.remoteAddress, req.connection.remotePort);
-    NouvelleQuestion();
+    jeuxQr.NouvelleQuestion();
 
-    ws.on('message', TraiterReponse);
+    //ws.on('message', TraiterReponse);
+
+    // ws.on('message', TMessage);
+    //function TMessage(message) {
+    //    jeuxQr.TraiterReponse(ws,message);
+    //}
+
+    ws.on('message', jeuxQr.TraiterReponse.bind(jeuxQr, ws));
+
 
     ws.on('close', function (reasonCode, description) {
         console.log('Deconnexion WebSocket %s sur le port %s', req.connection.remoteAddress, req.connection.remotePort);
     });
-
-
-    function TraiterReponse(message) {
-        console.log('De %s %s, message :%s', req.connection.remoteAddress, req.connection.remotePort, message);
-        if (message == bonneReponse) {
-            ws.send("Bonne reponse");
-        }
-        else {
-            ws.send("Mauvaise reponse");
-        }
-        setTimeout(() => {  //affichage de la question 3s après
-            NouvelleQuestion();
-        }, 3000);
-    }
-
-
-    function NouvelleQuestion() {
-        // var x = GetRandomInt(11);
-        // var y = GetRandomInt(11);
-        // question = x + '*' + y + ' =  ?';
-        // bonneReponse = x * y;
-        // Question de conversion de base 2 vers 10
-        var x = GetRandomInt(256);
-        bonneReponse = x;
-        question = 'Valeur en base 10 du nombre binaire :';
-        for (var i = 7; i >= 0; i--) {
-            if (Math.floor(x / Math.pow(2, i))) {
-                question += '1';
-                x -= Math.pow(2, i);
-            }
-            else {
-                question += '0';
-            }
-        }
-        aWss.broadcast(question);
-    }
-
-    function GetRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
-    }
 
 });
 
