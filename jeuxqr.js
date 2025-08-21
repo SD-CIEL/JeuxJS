@@ -76,7 +76,8 @@ class CQr {
         this.joueurs.forEach(function each(joueur) {
             joueursSimple.push({
                 nom: joueur.nom,
-                score: joueur.score
+                score: joueur.score,
+                ws: (joueur.ws == undefined) ? 'deconnecte' : 'connecte'
             });
         });
 
