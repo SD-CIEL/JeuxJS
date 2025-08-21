@@ -33,6 +33,7 @@ window.onload = function () {
         ws.onmessage = function (evt) {
             var mess = JSON.parse(evt.data);
             document.getElementById('messageRecu').value = mess.question;
+            document.getElementById('resultats').textContent = JSON.stringify(mess.joueurs);
         };
     }
 
