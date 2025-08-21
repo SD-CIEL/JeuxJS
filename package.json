@@ -6,12 +6,12 @@
   "author": {
     "name": ""
   },
-  "devDependencies": {
-    "eslint": "^8.21.0"
-  },
   "eslintConfig": {},
   "dependencies": {
+    "@eslint/js": "^9.33.0",
+    "eslint": "^9.33.0",
     "express": "^5.1.0",
-    "express-ws": "^5.0.2"
+    "express-ws": "^5.0.2",
+    "globals": "^16.3.0"
   }
 }

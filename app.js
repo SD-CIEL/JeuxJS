@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // TP javascript 2026
 // SD
 // Application:
@@ -7,6 +8,7 @@
 'use strict';
 
 console.log('TP-CIEL');
+
 
 var Cjeuxqr = require('./jeuxqr.js');
 // instanciation du jeux QR
@@ -86,11 +88,11 @@ exp.ws('/qr', function (ws, req) {
 var aWss = expressWs.getWss('/echo');
 var WebSocket = require('ws');
 aWss.broadcast = function broadcast(data) {
-    console.log("Broadcast aux clients navigateur : %s", data);
+    console.log('Broadcast aux clients navigateur : %s', data);
     aWss.clients.forEach(function each(client) {
         if (client.readyState == WebSocket.OPEN) {
             client.send(data, function ack(error) {
-                console.log("    -  %s-%s", client._socket.remoteAddress, client._socket.remotePort);
+                console.log('    -  %s-%s', client._socket.remoteAddress, client._socket.remotePort);
                 if (error) {
                     console.log('ERREUR websocket broadcast : %s', error.toString());
                 }

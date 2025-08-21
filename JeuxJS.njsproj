@@ -28,6 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="eslint.config.js" />
     <Content Include="app.js" />
     <Content Include="jeuxqr.js">
       <SubType>Code</SubType>
